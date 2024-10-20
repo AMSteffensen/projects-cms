@@ -10,12 +10,15 @@ const HeroCenter = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1200px;
+  width: 90vw;
+  max-width: var(--max-width);
   margin: 0 auto;
 `;
 
 const HeroTitle = styled.div`
-  max-width: 600px;
+  max-width: 35rem;
+  line-height: 2;
+  color: var(--grey-600);
 `;
 
 const HeroHeading = styled.h1`

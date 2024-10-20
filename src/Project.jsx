@@ -3,14 +3,24 @@ import useFetchProjects from "./fetchProjects";
 import styled from "styled-components";
 
 const ProjectsWrapper = styled.div`
-  margin: 2rem 0;
+  margin: 2rem;
 `;
 
 const Title = styled.h2`
   font-size: 2rem;
-  margin-bottom: 1.5rem; /* Adds space below the title */
+  margin-bottom: 1.5rem;
   text-align: center;
   color: #333;
+  position: relative;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 4rem;
+    height: 0.25rem;
+    background-color: var(--primary-500);
+    margin: 1rem auto 0;
+  }
 `;
 
 const ProjectList = styled.div`

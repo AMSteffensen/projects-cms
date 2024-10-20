@@ -1,25 +1,21 @@
-import * as contentful from "contentful";
 import { useQuery } from "@tanstack/react-query";
 
-// Contentful environment variables from Vite
-const space = import.meta.env.VITE_CONTENTFUL_SPACE_ID;
-const accessToken = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN;
+// Define the API endpoint based on the environment
+const API_URL =
+  process.env.NODE_ENV === "production"
+    ? "/.netlify/functions/fetchProjects"
+    : "http://localhost:8888/.netlify/functions/fetchProjects";
 
-// Create a Contentful client
-const client = contentful.createClient({
-  space: space,
-  accessToken: accessToken,
-});
-
-// Function to fetch projects
+// Function to fetch projects from the Netlify function
 const fetchProjects = async () => {
-  const response = await client.getEntries({ content_type: "project" });
-  return response.items.map((item) => {
-    const { title, url, image } = item.fields;
-    const id = item.sys.id;
-    const img = image?.fields?.file?.url;
-    return { title, url, id, img };
-  });
+  const response = await fetch(API_URL);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch projects");
+  }
+
+  const data = await response.json();
+  return data;
 };
 
 // Custom hook to use Fetch Projects with React Query
@@ -28,9 +24,9 @@ export const useFetchProjects = () => {
     queryKey: ["projects"], // Unique key for the query
     queryFn: fetchProjects, // Fetch function
     refetchOnWindowFocus: true,
-    // Refetch when the network reconnects
     refetchOnReconnect: true,
-    //staleTime: 1000 * 60 * 5, // Optional: Data stays fresh for 5 minutes
+    // Optional: Data stays fresh for 5 minutes
+    //staleTime: 1000 * 60 * 5
     retry: 1, // Optional: Number of times to retry fetching data on failure
   });
 };

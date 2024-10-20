@@ -4,13 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"vite\" \"netlify dev\"",
+    "start": "netlify dev",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.59.15",
+    "axios": "^1.7.7",
     "contentful": "^9.3.5",
+    "dotenv": "^16.4.5",
+    "netlify-cli": "^17.37.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "^6.1.13"
@@ -19,6 +23,7 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
+    "concurrently": "^9.0.1",
     "vite": "^4.2.0"
   }
 }
